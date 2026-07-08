@@ -1,0 +1,140 @@
+########################################
+# Terraform
+########################################
+# Local .terraform directories
+**/.terraform/*
+**/.terraform.lock.hcl
+.terraform
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Ignore variable files that contain secrets
+*.tfvars
+*.tfvars.json
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan files
+*.plan
+
+########################################
+# .NET
+########################################
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio temp files
+.vs/
+
+# Debug/Release folders
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]64/
+[Aa][Rr][Mm]/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Dotnet tools
+dotnet-tools.json
+
+# Logs
+*.log
+
+########################################
+# Python
+########################################
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local settings
+*.env
+*.env.*
+
+########################################
+# Node.js
+########################################
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local env files
+.env
+.env.*
+
+# Next.js / Nuxt / SvelteKit
+.next/
+.nuxt/
+.svelte-kit/
+
+# Cache
+.cache/
+.eslintcache/
+
+########################################
+# OS / Editor junk
+########################################
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# JetBrains
+.idea/
+
+# VSCode
+.vscode/
