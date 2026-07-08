@@ -42,5 +42,6 @@ resource "azurerm_linux_function_app" "order-api-func" {
   tags = { 
         "course" = "serverless",
         "func" = "${var.project_name}-api-${var.environment}"
+        "cicd" = "github-actions"
    }
 }
