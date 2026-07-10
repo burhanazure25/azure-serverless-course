@@ -83,7 +83,7 @@ resource "azurerm_monitor_diagnostic_setting" "func_to_law" {
     }
   }
 
-  dynamic "enabled_metric" {
+  dynamic "metric" {
     for_each = local.enabled_metrics
     content {
       category = enabled_metric.value
