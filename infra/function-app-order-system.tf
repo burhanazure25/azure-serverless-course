@@ -36,12 +36,57 @@ resource "azurerm_linux_function_app" "order-api-func" {
   app_settings = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.main.instrumentation_key
-    # "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.main.connection_string
     "AzureWebJobsStorage" = azurerm_storage_account.main.primary_connection_string
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.main.connection_string
+    "applicationInsightsAgent_EXTENSION_VERSION"  = "~3"
   }
   tags = { 
         "course" = "serverless",
         "func" = "${var.project_name}-api-${var.environment}"
         "cicd" = "github-actions"
    }
+}
+
+data "azurerm_monitor_diagnostic_categories" "func" {
+  resource_id = azurerm_linux_function_app.order-api-func.id
+}
+
+locals {
+  desired_logs = toset([
+    "FunctionAppLogs",
+    "AppServiceConsoleLogs",
+    "AppServiceHTTPLogs",
+    "AppServiceAppLogs",
+    "AppServiceplatformLogs",
+  ])
+
+  available_logs = toset(data.azurerm_monitor_diagnostic_categories.func.categories[*].name)
+  enabled_logs = setintersection(local.desired_logs, local.available_logs)
+
+  desired_metrics = toset([
+    "AllMetrics",
+  ])
+  available_metrics = toset(data.azurerm_monitor_diagnostic_categories.func.categories[*].name)
+  enabled_metrics = setintersection(local.desired_metrics, local.available_metrics)
+}
+
+resource "azurerm_monitor_diagnostic_setting" "func_to_law" {
+  name = "${var.project_name}-api-${var.environment}-func-diag"
+  target_resource_id = azurerm_linux_function_app.order-api-func.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+
+  dynamic "enabled_log" {
+    for_each = local.enabled_logs
+    content {
+      category = enabled_log.value
+    }
+  }
+
+  dynamic "enabled_metric" {
+    for_each = local.enabled_metrics
+    content {
+      category = enabled_metric.value
+    }
+  }
 }
