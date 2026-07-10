@@ -60,13 +60,13 @@ locals {
     "AppServiceplatformLogs",
   ])
 
-  available_logs = toset(data.azurerm_monitor_diagnostic_categories.log_category_types)
+  available_logs = toset(data.azurerm_monitor_diagnostic_categories.func.log_category_types)
   enabled_logs = setintersection(local.desired_logs, local.available_logs)
 
   desired_metrics = toset([
     "AllMetrics",
   ])
-  available_metrics = toset(data.azurerm_monitor_diagnostic_categories.log_category_types)
+  available_metrics = toset(data.azurerm_monitor_diagnostic_categories.func.log_category_types)
   enabled_metrics = setintersection(local.desired_metrics, local.available_metrics)
 }
 
