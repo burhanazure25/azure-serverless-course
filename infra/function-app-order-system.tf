@@ -38,7 +38,9 @@ resource "azurerm_linux_function_app" "order-api-func" {
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.main.instrumentation_key
     "AzureWebJobsStorage" = azurerm_storage_account.main.primary_connection_string
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.main.connection_string
-    "applicationInsightsAgent_EXTENSION_VERSION"  = "~3"
+    "ApplicationInsightsAgent_EXTENSION_VERSION"  = "~3"
+    "QUEUE_NAME" = azurerm_servicebus_queue.order_queue.name
+    "SERVICE_BUS_CONNECTION_STRING" = azurerm_servicebus_namespace_authorization_rule.auth_rule.primary_connection_string
   }
   tags = { 
         "course" = "serverless",
