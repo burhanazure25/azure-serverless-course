@@ -12,7 +12,6 @@ app = func.FunctionApp()
 def OrderTrigger(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing order request.')
 
-
     try:
         order = req.get_json()
     except ValueError:
