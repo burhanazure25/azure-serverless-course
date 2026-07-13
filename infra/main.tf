@@ -1,6 +1,9 @@
 resource "azurerm_resource_group" "main" {
   name     = "${var.project_name}-${var.environment}-rg"
   location = "${var.location}"
+  tags = {
+    course = "serverless"
+  }
 }
 
 resource "azurerm_service_plan" "my_plan" {
@@ -9,6 +12,9 @@ resource "azurerm_service_plan" "my_plan" {
   location            = "${var.location}"
   os_type             = "Linux"
   sku_name            = "B1"
+  tags = {
+      course = "serverless"
+    }
 }
 
 resource "azurerm_storage_account" "main" {
@@ -17,5 +23,8 @@ resource "azurerm_storage_account" "main" {
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags = {
+    course = "serverless"
+  }
 }
 
