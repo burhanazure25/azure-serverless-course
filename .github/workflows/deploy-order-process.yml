@@ -5,7 +5,7 @@ on:
         branches:
         - main
         paths:
-        - 'order-process-function/**'
+        - 'order-processor-function/**'
         - '.github/workflows/deploy-order-process.yml'
     workflow_dispatch: # allow manual execution
 
