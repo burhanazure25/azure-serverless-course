@@ -19,7 +19,7 @@ public class ProcessOrderFunction
 
     [Function(nameof(ProcessOrderFunction))]
     public async Task Run(
-        [ServiceBusTrigger("notification-queue", Connection = "ServiceBusConnection")]
+        [ServiceBusTrigger("notification_queue", Connection = "ServiceBusConnection")]
         ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {
