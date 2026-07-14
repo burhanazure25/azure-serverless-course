@@ -21,6 +21,7 @@ resource "azurerm_linux_function_app" "order-process" {
         "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.order_insights.connection_string
         "ApplicationInsightsAgent_EXTENSION_VERSION"  = "~3"
         "ServiceBusConnection" = azurerm_servicebus_namespace_authorization_rule.listen_rule.primary_connection_string
+        "ReceiptStorageConnection" = azurerm_storage_account.file_storage.primary_connection_string
     }
     tags = { 
         "course" = "serverless"
