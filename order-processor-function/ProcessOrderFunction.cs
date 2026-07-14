@@ -47,6 +47,8 @@ public class ProcessOrderFunction
             orderDetailInfo += $"Product ID: {item.ProductId}, Quantity: {item.Quantity}\n";
         }
 
+        _logger.LogInformation("Order Details: {details}", orderDetailInfo);
+
         // Upload to Blob
         var blobContainerName = Environment.GetEnvironmentVariable("BlobContainerName");
         var connString = Environment.GetEnvironmentVariable("ReceiptStorageConnection");
@@ -55,12 +57,12 @@ public class ProcessOrderFunction
         var blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
         await blobContainerClient.CreateIfNotExistsAsync();
 
-        var blobName = $"order-{orderInfo.CustomerName}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}.txt";
+        var blobName = $"order-{orderInfo.CustomerName.Replace(" ","-")}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}.txt";
         var blobClient = blobContainerClient.GetBlobClient(blobName);
 
         using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(orderDetailInfo)))
         {
-            await blobClient.UploadAsync(stream, true);
+            await blobClient.UploadAsync(stream, overwrite: true);
         }
 
         
