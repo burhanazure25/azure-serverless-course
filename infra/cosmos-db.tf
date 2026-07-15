@@ -19,3 +19,17 @@ resource "azurerm_cosmosdb_account" "main" {
         project     = var.project_name
     }
 }
+
+resource "azurerm_cosmosdb_sql_database" "order_db" {
+    name                = "order-db"
+    resource_group_name = azurerm_resource_group.main.name
+    account_name        = azurerm_cosmosdb_account.main.name
+}
+
+resource "azurerm_cosmosdb_sql_container" "orders" {
+    name                = "orders"
+    resource_group_name = azurerm_resource_group.main.name
+    account_name        = azurerm_cosmosdb_account.main.name
+    database_name       = azurerm_cosmosdb_sql_database.order_db.name
+    partition_key_paths  = ["/id"]
+}
