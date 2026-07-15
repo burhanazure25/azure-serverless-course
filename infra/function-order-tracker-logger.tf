@@ -13,5 +13,16 @@ resource "azurerm_linux_function_app" "order_tracker_func" {
   app_settings = {
     "FUNCTIONS_WORKER_RUNTIME" = "node"
     "AzureWebJobsStorage" = azurerm_storage_account.main.primary_connection_string
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.order_logger_insights.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.order_logger_insights.connection_string
+    "ApplicationInsightsAgent_EXTENSION_VERSION"  = "~3"
   }
+}
+
+resource "azurerm_application_insights" "order_logger_insights" {
+    name               = "order-logger-insights-${var.environment}"
+    resource_group_name = azurerm_resource_group.main.name
+    location            = azurerm_resource_group.main.location
+    application_type    = "other"
+    workspace_id        = azurerm_log_analytics_workspace.main.id
 }
